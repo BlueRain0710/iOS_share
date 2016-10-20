@@ -10,27 +10,27 @@
 ==
 #### 使用说明：
 * 1.向第三方平台注册(根据第三方平台接入介绍，填写对应appKey，包含对应框架。)
+
 *要填写第三方平台分配的对应值*
     [FYJShare regestSina:@"" andApiSecert:@"" andRedirectURL:@"http"];
     [FYJShare regestWeChat:@"" andApiSecert:@""];
     [FYJShare regestTencentOauth:@"" andApiSecert:@""];
     
 * 2.对应app相互调用的回调
+
 [FYJShare FYJHandleOpenURL:url];
-   
-    在appDelegate下列方法中使用
-
--(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    return [FYJShare FYJHandleOpenURL:url];
-}
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-    return [FYJShare FYJHandleOpenURL:url];
-}
-
+在appDelegate下列方法中使用
+ -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+    {
+        return [FYJShare FYJHandleOpenURL:url];
+    }
+-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+        return [FYJShare FYJHandleOpenURL:url];
+        }
+        
 * 3.登录授权
-    
-    [[FYJShare shared] FYJShareLogin:ThirdLoginTypeWeChat success:^(FYJShareData *userData) {
+
+[[FYJShare shared] FYJShareLogin:ThirdLoginTypeWeChat success:^(FYJShareData *userData) {
         
         NSLog(@"授权成功-> openid:%@,accesstoken:%@,昵称:%@头像:%@",userData.openID,userData.accessToken,userData.nickName,userData.userPic);
         
@@ -39,7 +39,7 @@
     }];
     
 * 4.不显示视图直接分享到指定的一个平台：例如qq空间
-    
+
     [[FYJShare shared] FYJShareInstance:ThirdShareTypeQQSpace withContent:nil success:^(FYJShareContent *content) {
         //
         NSLog(@"分享成功");
@@ -50,9 +50,9 @@
     
 * 5，显示分享视图，分享到显示的分享列表中用户选择的某一个平台
 
-NSArray *arr = [FYJShareContent getShareListWithType:ThirdShareTypeQQSpace,ThirdShareTypeQQFriend,ThirdShareTypeWechatSession, nil];
-FYJShareContent *content = [[FYJShareContent alloc] initWitContent:@"分享内容正文" title:@"标题" thumbImage:[UIImage imageNamed:@""] url:@"https://github.com/BlueRain0710/iOS" imageData:nil];
-[[FYJShare shared] FYJSharetypeList:arr withContent:content success:^(FYJShareContent *content) {
+    NSArray *arr = [FYJShareContent getShareListWithType:ThirdShareTypeQQSpace,ThirdShareTypeQQFriend,ThirdShareTypeWechatSession, nil];
+    FYJShareContent *content = [[FYJShareContent alloc] initWitContent:@"分享内容正文" title:@"标题" thumbImage:[UIImage imageNamed:@""] url:@"https://github.com/BlueRain0710/iOS" imageData:nil];
+    [[FYJShare shared] FYJSharetypeList:arr withContent:content success:^(FYJShareContent *content) {
         NSLog(@"分享成功");
     } failed:^(NSString *failinfo) {
         NSLog(@"分享失败: %@",failinfo);
